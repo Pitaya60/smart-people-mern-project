@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+
 const mongoose = require("mongoose");
 const path = require("path"); 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 require('dotenv').config();
 
 
@@ -19,15 +20,13 @@ app.use(cors({
 // routes
 const initiativeRoutes = require('./src/initiative/initiative.route');
 const userRoutes =  require("./src/users/user.route")
-const adminRoutes = require("./src/stats/admin.stats");
 
 app.use("/api/initiative", initiativeRoutes)
 app.use("/api/auth", userRoutes)
-app.use("/api/admin", adminRoutes)
 
 
 async function main() {
-  await mongoose.connect("mongodb+srv://Camilla:12345@cluster0.bedd7du.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+  await mongoose.connect(process.env.DB_URL); 
   app.use("/", (req, res) => {
     res.send(" Server is running!");
   });
@@ -39,5 +38,5 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-app.use('/uploads', express.static(path.join(__dirname,'uploads'), {})); 
+
 

@@ -1,94 +1,83 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const AssistantChatPage = () => {
+  const ai = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+
   const [messages, setMessages] = useState([
     { sender: 'bot', text: 'Привет! Я твой AI помощник. Чем могу помочь?' }
-  ])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
+  ]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSend = async () => {
-    if (!input.trim()) return
+    if (!input.trim()) return;
 
-    const userMessage = { sender: 'user', text: input }
-    setMessages(prev => [...prev, userMessage])
-    setInput('')
-    setLoading(true)
+    const userMessage = { sender: 'user', text: input };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setLoading(true);
 
     try {
-      const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
-        {
-          model: 'gpt-3.5-turbo',
-          messages: [
-            { role: 'system', content: 'Ты дружелюбный ассистент, помогаешь кратко и понятно.' },
-            ...messages.map(msg => ({
-              role: msg.sender === 'user' ? 'user' : 'assistant',
-              content: msg.text
-            })),
-            { role: 'user', content: input }
-          ],
-          temperature: 0.7
+      const model = ai.getGenerativeModel({
+        model: 'gemini-1.5-flash',
+        config: {
+          systemInstruction: "System instruction here",
         },
-        {
-          headers: {
-            'Authorization': `Bearer OPENAI_API_KEY`,
-            'Content-Type': 'application/json'
-          }
-        }
-      )
+      });
+      const result = await model.generateContent(input);
+      const response = await result.response;
+      const text = await response.text();
 
-      const botMessage = {
-        sender: 'bot',
-        text: response.data.choices[0].message.content.trim()
-      }
-      setMessages(prev => [...prev, botMessage])
+      const botMessage = { sender: 'bot', text: text.trim() };
+      setMessages(prev => [...prev, botMessage]);
     } catch (error) {
+      console.error(error);
       setMessages(prev => [
         ...prev,
         { sender: 'bot', text: 'Произошла ошибка. Попробуй снова.' }
-      ])
+      ]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleSend()
+      handleSend();
     }
-  }
+  };
 
   return (
     <section className="min-h-screen bg-[#F4F4FF] flex items-center justify-center p-6">
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-3xl p-6 flex flex-col h-[80vh]">
-        <h2 className="text-2xl font-bold text-[#3057FF] mb-4 text-center">AI Помощник</h2>
+      <div className="bg-white shadow-xl rounded-3xl w-full max-w-3xl p-6 flex flex-col h-[80vh]">
+        <h2 className="text-3xl font-semibold text-[#3057FF] mb-6 text-center">AI Помощник</h2>
 
-        <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+        <div className="flex-1 overflow-y-auto mb-4 space-y-4 px-2">
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={`p-3 max-w-[75%] rounded-xl ${
-                msg.sender === 'user'
-                  ? 'ml-auto bg-[#3057FF] text-white text-right'
-                  : 'mr-auto bg-gray-100 text-[#282828]'
-              }`}
+              className={`p-4 max-w-[75%] rounded-xl transition-all duration-300 ease-in-out
+                ${msg.sender === 'user'
+                ? 'ml-auto bg-[#3057FF] text-white shadow-md'
+                : 'mr-auto bg-gray-100 text-[#282828] shadow-sm'
+                }`}
             >
               {msg.text}
             </div>
           ))}
           {loading && (
-            <div className="mr-auto bg-gray-100 text-[#282828] p-3 rounded-xl max-w-[75%]">
+            <div className="mr-auto bg-gray-100 text-[#282828] p-4 rounded-xl max-w-[75%] shadow-sm">
               Печатает...
             </div>
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <input
             type="text"
-            className="flex-1 px-4 py-2 border rounded-md bg-[#F4F4FF] focus:outline-none focus:ring-2 focus:ring-[#3057FF]"
+            className="flex-1 px-4 py-3 border rounded-md bg-[#F4F4FF] focus:outline-none focus:ring-2 focus:ring-[#3057FF] shadow-sm"
             placeholder="Напишите сообщение..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -97,14 +86,14 @@ const AssistantChatPage = () => {
           <button
             onClick={handleSend}
             disabled={loading}
-            className="bg-[#3057FF] text-white px-4 py-2 rounded-md hover:bg-[#282828] transition disabled:opacity-50"
+            className="bg-[#3057FF] text-white px-6 py-3 rounded-md hover:bg-[#282828] transition-all duration-200 ease-in-out disabled:opacity-50 shadow-md"
           >
             Отправить
           </button>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default AssistantChatPage
+export default AssistantChatPage;

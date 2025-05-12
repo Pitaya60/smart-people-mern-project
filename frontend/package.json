@@ -10,10 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.9.0",
     "chart.js": "^4.4.4",
-    "firebase": "^10.13.2",
+    "firebase": "^10.14.1",
     "frontend": "file:",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",

@@ -12,10 +12,11 @@ import NewsPage from '../pages/home/News';
 import Banner from '../pages/home/Banner';
 import About from '../pages/home/About';
 import AllInitiativesPage from "../pages/UserPage/AllInitiativesPage";
-// import AdminRoute from "./AdminRoute";
-// import AdminLogin from "../components/AdminLogin";
-// import DashboardLayout from "../pages/dashboard/DashboardLayout";
-// import Dashboard from "../pages/dashboard/Dashboard";
+import AdminRoute from "./AdminRoute";
+import AdminLogin from "../components/AdminLogin";
+import DashboardLayout from "../pages/dashboard/DashboardLayout";
+import Dashboard from "../pages/dashboard/Dashboard";
+import Grid from "../pages/home/SmartCityGrid"
 // import ManageBooks from "../pages/dashboard/manageBooks/ManageBooks";
 // import AddBook from "../pages/dashboard/addBook/AddBook";
 // import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
@@ -29,10 +30,6 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      // {
-      //     path: "/orders",
-      //     element: <PrivateRoute><OrderPage/></PrivateRoute>
-      // },
       {
         path: "/about",
         element: <About />
@@ -76,43 +73,47 @@ const router = createBrowserRouter([
       {
         path:'/allInitiatives', 
         element:<AllInitiativesPage/>
+      }, 
+      {
+        path:'/services', 
+        element:<Grid/>
       }
     ]
   },
-  // {
-  //   path: "/admin",
-  //   element: <AdminLogin />
-  // },
-  // {
-  //   path: "/dashboard",
-  //   element: <AdminRoute>
-  //     <DashboardLayout />
-  //   </AdminRoute>,
-    //children: [
-    //   {
-    //     path: "",
-    //     element: <AdminRoute><Dashboard /></AdminRoute>
-    //   },
-    //   {
-    //     path: "add-new-book",
-    //     element: <AdminRoute>
-    //       <AddBook />
-    //     </AdminRoute>
-    //   },
-    //   {
-    //     path: "edit-book/:id",
-    //     element: <AdminRoute>
-    //       <UpdateBook />
-    //     </AdminRoute>
-    //   },
-    //   {
-    //     path: "manage-books",
-    //     element: <AdminRoute>
-    //       <ManageBooks />
-    //     </AdminRoute>
-    //  }
-    //]
-  
+    {
+    path: "/admin",
+     element: <AdminLogin />
+    },
+   {
+  path: "/dashboard",
+    element: <AdminRoute>
+      <DashboardLayout />
+    </AdminRoute>,
+    children: [
+      {
+        path: "",
+         element: <AdminRoute><Dashboard /></AdminRoute>
+      },
+  //    {
+  //       path: "add-new-book",
+  //       element: <AdminRoute>
+  //         <AddBook />
+  //       </AdminRoute>
+  //     },
+  //     {
+  //       path: "edit-book/:id",
+  //       element: <AdminRoute>
+  //         <UpdateBook />
+  //       </AdminRoute>
+  //     },
+  //     {
+  //       path: "manage-books",
+  //       element: <AdminRoute>
+  //         <ManageBooks />
+  //       </AdminRoute>
+  //    }
+  ]
+  }
 ]);
 
 export default router;

@@ -1,27 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
-
-const faqs = [
-  {
-    question: 'Какой основной функционал вашего проекта?',
-    answer: 'Наш проект помогает пользователям быстро находить проверенные квартиры по заданным критериям: бюджет, расположение, безопасность и договор аренды.',
-  },
-  {
-    question: 'Безопасно ли пользоваться платформой?',
-    answer: 'Да. Мы проверяем объявления, предупреждаем о мошенниках и помогаем пользователям заключать безопасные сделки с договорами и рекомендациями.',
-  },
-  {
-    question: 'Могу ли я добавить свою квартиру?',
-    answer: 'Конечно! Зарегистрируйтесь, заполните форму, прикрепите фото и отправьте на модерацию. Мы свяжемся с вами в течение 24 часов.',
-  },
-  {
-    question: 'Как связаться с поддержкой?',
-    answer: 'Вы можете написать нам на email: support@rentbuddy.kz или через Telegram-бот @rentbuddy_bot. Мы отвечаем быстро и с заботой.',
-  },
-];
+import faqsData from '../../assets/faqs.json';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [faqs, setFaqs] = useState([]);
+
+  useEffect(() => {
+    setFaqs(faqsData); // загрузка данных из JSON
+  }, []);
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);

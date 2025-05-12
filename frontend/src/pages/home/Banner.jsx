@@ -1,6 +1,6 @@
 import React from 'react'
-
-import bannerImg from "../../assets/banner.jpg"
+import { Link } from "react-router-dom";
+import bannerImg from "../../assets/builds.png"
 
 const Banner = () => {
   return (
@@ -18,7 +18,10 @@ const Banner = () => {
               </p>
 
             <button className="bg-primary text-white px-8 py-4 rounded hover:bg-secondary transition">
-Перейти на Smart People</button>
+               <Link to="/login"
+        >   Перейти на Smart People
+        </Link>
+        </button>
         </div>
 
        

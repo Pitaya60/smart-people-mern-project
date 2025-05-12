@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { HiOutlineUser } from "react-icons/hi";
 import logoImg from "../assets/idea.png";
-import avatarImg from "../assets/avatar.png";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
@@ -9,8 +8,7 @@ import { useAuth } from "../context/AuthContext";
 const navigation = [
   {name:"Создать заявку", href:"/create" }, 
   {name:'Истории заявок', href:"/cart"}, 
-  {name:"ИИ-помощник", href:"/aichat"},
-  {name:"Визуализация данных",href:""}, 
+  {name:"ИИ-помощник", href:"/aichat"}, 
   {name: "Настройки", href: "/settings" },
   {name:"Мой Кабинет",href:"/profile"},
 ];
@@ -24,7 +22,6 @@ const menuLinks = [
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const cartItems = useSelector((state) => state.cart.cartItems);
 
   const { currentUser, logout } = useAuth();
 
@@ -62,11 +59,7 @@ const Navbar = () => {
           {currentUser ? (
             <>
               <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                <img
-                  src={avatarImg}
-                  alt="user"
-                  className={`h-8 w-8 rounded-full ${currentUser ? "ring-2 ring-[#3057FF]" : ""}`}
-                />
+                <HiOutlineUser className="h-8 w-8 rounded-full text-[#3057FF]" />
               </button>
 
               {isDropdownOpen && (
