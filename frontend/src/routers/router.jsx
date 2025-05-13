@@ -17,9 +17,9 @@ import AdminLogin from "../components/AdminLogin";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Grid from "../pages/home/SmartCityGrid"
-// import ManageBooks from "../pages/dashboard/manageBooks/ManageBooks";
-// import AddBook from "../pages/dashboard/addBook/AddBook";
-// import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
+import AskAi from "../pages/dashboard/AskAi";
+import ManageInitiatives from "../pages/dashboard/ManageInitiatives"; 
+
 
 const router = createBrowserRouter([
   {
@@ -94,24 +94,18 @@ const router = createBrowserRouter([
         path: "",
          element: <AdminRoute><Dashboard /></AdminRoute>
       },
-  //    {
-  //       path: "add-new-book",
-  //       element: <AdminRoute>
-  //         <AddBook />
-  //       </AdminRoute>
-  //     },
-  //     {
-  //       path: "edit-book/:id",
-  //       element: <AdminRoute>
-  //         <UpdateBook />
-  //       </AdminRoute>
-  //     },
-  //     {
-  //       path: "manage-books",
-  //       element: <AdminRoute>
-  //         <ManageBooks />
-  //       </AdminRoute>
-  //    }
+     {
+         path: "ask-ai",
+         element: <AdminRoute>
+        <AskAi />
+         </AdminRoute>
+     }, 
+     {
+        path: "manage-initiatives",
+        element: <AdminRoute>
+          <ManageInitiatives />
+        </AdminRoute>
+      },
   ]
   }
 ]);
