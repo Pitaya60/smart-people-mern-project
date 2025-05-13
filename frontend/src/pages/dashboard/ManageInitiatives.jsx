@@ -65,20 +65,6 @@ const InitiativesDashboard = () => {
     }
   ];
 
-  // Типы инициатив для фильтрации
-  const initiativeTypes = [
-    { id: 'all', name: 'Все инициативы' },
-    { id: 'map', name: 'Карта города' },
-    { id: 'transport', name: 'Транспорт' },
-    { id: 'ecology', name: 'Экология' },
-    { id: 'services', name: 'Городские сервисы' },
-    { id: 'social', name: 'Социальная сфера' },
-    { id: 'economy', name: 'Экономика' },
-    { id: 'portrait', name: 'Портрет города' },
-    { id: 'socio-economic', name: 'Социально-экономический портрет' },
-    { id: 'security', name: 'Безопасность' },
-  ];
-
   const cities = [
     'Все города', 'Алматы', 'Астана', 'Шымкент', 'Караганда', 'Павлодар'
   ];
@@ -153,22 +139,7 @@ const InitiativesDashboard = () => {
             </button>
           </div>
           
-          {/* Типы инициатив */}
-          <div className="flex flex-wrap gap-2">
-            {initiativeTypes.map(type => (
-              <button
-                key={type.id}
-                className={`px-3 py-1 rounded-full text-sm ${
-                  activeFilter === type.id
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-                onClick={() => setActiveFilter(type.id)}
-              >
-                {type.name}
-              </button>
-            ))}
-          </div>
+        
         </div>
         
         {/* Таблица инициатив */}
